@@ -1,0 +1,14 @@
+{
+  "name": "last30days-web-dashboard",
+  "version": "1.0.0",
+  "description": "A beautiful, premium web dashboard to explore and analyze last30days research briefings.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# Local databases / user ratings
+ratings.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
