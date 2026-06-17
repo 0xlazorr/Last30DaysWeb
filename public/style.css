@@ -10,22 +10,22 @@
   --bg-card-hover: rgba(28, 30, 54, 0.8);
   --bg-input: #141624;
   --border-color: rgba(255, 255, 255, 0.06);
-  --border-focus: rgba(99, 102, 241, 0.4);
+  --border-focus: rgba(14, 165, 233, 0.4);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
-  --accent-purple: #a855f7;
-  --accent-blue: #3b82f6;
-  --accent-indigo: #6366f1;
+  --accent-purple: #0ea5e9;
+  --accent-blue: #0284c7;
+  --accent-indigo: #38bdf8;
   --accent-green: #10b981;
   --accent-orange: #f97316;
   --accent-yellow: #f59e0b;
 
-  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-  --gradient-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+  --gradient-primary: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  --gradient-blue: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+  --gradient-glow: 0 0 20px rgba(14, 165, 233, 0.15);
   
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -94,8 +94,8 @@ a:hover {
   height: 100vh;
   width: 100vw;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.03) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.03) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.03) 0px, transparent 50%);
 }
 
 /* --- Sidebar Styles --- */
@@ -183,8 +183,8 @@ a:hover {
 }
 
 .report-item.active {
-  background: rgba(99, 102, 241, 0.08);
-  border-color: rgba(99, 102, 241, 0.2);
+  background: rgba(14, 165, 233, 0.08);
+  border-color: rgba(14, 165, 233, 0.2);
   box-shadow: var(--gradient-glow);
 }
 
@@ -306,12 +306,12 @@ a:hover {
 .btn-primary {
   background: var(--gradient-primary);
   color: white;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
 }
 
 .btn-secondary {
@@ -564,7 +564,7 @@ a:hover {
 .search-box input:focus {
   border-color: var(--border-focus);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
 .filter-actions {
@@ -608,7 +608,7 @@ a:hover {
 
 .cluster-card:hover {
   background: var(--bg-card-hover);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(14, 165, 233, 0.2);
 }
 
 .cluster-header {
@@ -653,9 +653,9 @@ a:hover {
   font-size: 12px;
   padding: 4px 10px;
   border-radius: var(--radius-sm);
-  background-color: rgba(99, 102, 241, 0.1);
+  background-color: rgba(14, 165, 233, 0.1);
   color: var(--accent-indigo);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
   flex-shrink: 0;
 }
 
@@ -772,7 +772,7 @@ a:hover {
 
 .web-item:hover {
   background-color: rgba(255, 255, 255, 0.03);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(14, 165, 233, 0.2);
 }
 
 .web-header {
@@ -1152,7 +1152,7 @@ a:hover {
 .sidebar-search input:focus {
   border-color: var(--border-focus);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.1);
 }
 
 /* --- Star Ratings --- */
