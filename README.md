@@ -12,20 +12,20 @@ A beautiful, premium web dashboard to explore, analyze, and visualize search fin
 *   **Interactive Star Ratings:** Rate specific evidence clusters or source URLs. Ratings are automatically saved locally in `ratings.json`.
 *   **Interactive Source Coverage Chart:** View a responsive doughnut visualization of source distribution utilizing Chart.js.
 *   **Console Research Runner:** Launch new research jobs right from the UI console with real-time log polling.
-*   **CLI Integration:** When running queries via the CLI, the dashboard automatically saves markdown reports, boots up the local server, and launches the browser to view results.
+*   **Local Report Reader:** Automatically scans, parses, and lists markdown briefings saved in the `~/Documents/Last30Days` directory.
 
 ---
 
 ## 🛠️ Setup & Running
 
-This is a **fully local setup** to ensure data privacy and direct access to your local filesystem coordinates.
+This is a **fully local setup** to ensure data privacy and direct access to your local filesystem reports.
 
 ### Prerequisites
 1. **Node.js** (v18+)
-2. **Python** (v3.12+) and the CLI script `last30days.py` installed.
+2. **Python** (v3.12+) and the core research engine setup (see the core [last30days-skill](https://github.com/mvanhorn/last30days-skill) repository).
 
 ### Installation & Startup
-1. Clone your fork and enter the dashboard directory:
+1. Clone this repository and enter the directory:
    ```bash
    cd Documents/Last30DaysWeb
    ```
@@ -33,7 +33,7 @@ This is a **fully local setup** to ensure data privacy and direct access to your
    ```bash
    npm install
    ```
-3. Start the dashboard web server:
+3. Start the web server:
    ```bash
    npm start
    ```
@@ -41,15 +41,20 @@ This is a **fully local setup** to ensure data privacy and direct access to your
 
 ---
 
-## ⚡ CLI Integration & Redirection
+## 🔍 How to Generate & View Reports
 
-The CLI wrapper integrates seamlessly with this website. If **GitHub Authentication** is configured on your machine (`GITHUB_TOKEN` environment variable or `gh auth token` fallback):
+Since this companion dashboard runs locally, you can view your research reports using two primary methods:
 
-1. Running `last30days "topic"` in the terminal will compile the research report.
-2. It writes the markdown file to the default memory folder (`~/Documents/Last30Days`).
-3. It checks if the server is running on port 3000. If not, it **automatically boots it in the background**.
-4. It opens your browser to:
+### Method 1: Running Research from the Web UI (Recommended)
+1. Click the **Run New Research** button in the sidebar.
+2. Fill out the research topic and target sources/configurations (e.g., subreddits, GitHub users/repos).
+3. Click **Start Research**—the dashboard will run the underlying Python engine in the background and stream live console output.
+4. Once completed, the new report will automatically appear in the sidebar list.
+
+### Method 3: Running from the CLI
+1. Run a query using the standard `last30days` CLI engine and specify the save folder as the default memory directory:
+   ```bash
+   python3 last30days-skill/skills/last30days/scripts/last30days.py "Your Topic" --save-dir ~/Documents/Last30Days --emit compact
    ```
-   http://localhost:3000/?report=<report-filename>
-   ```
-5. It prints a concise message in the terminal instead of dumping large markdown texts.
+2. Refresh the dashboard (`http://localhost:3000`) or click the **Refresh** button in the header.
+3. The generated report will be parsed and loaded into the dashboard interface.
