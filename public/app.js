@@ -74,6 +74,19 @@ function setupEventListeners() {
     }
   });
 
+  // Theme Toggle
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  if (themeToggleBtn) {
+    const isLight = document.documentElement.classList.contains('light-theme');
+    themeToggleBtn.querySelector('i').className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    
+    themeToggleBtn.addEventListener('click', () => {
+      const activeLight = document.documentElement.classList.toggle('light-theme');
+      localStorage.setItem('theme', activeLight ? 'light' : 'dark');
+      themeToggleBtn.querySelector('i').className = activeLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    });
+  }
+
   // Tab switching
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {

@@ -1240,3 +1240,84 @@ a:hover {
   background: rgba(74, 222, 128, 0.4);
 }
 
+/* --- Light Theme Overrides --- */
+:root.light-theme {
+  --bg-app: #f8fafc;
+  --bg-sidebar: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-input: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-focus: rgba(14, 165, 233, 0.5);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --gradient-glow: 0 0 20px rgba(14, 165, 233, 0.08);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+:root.light-theme .app-container {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 50%);
+}
+
+:root.light-theme .main-header {
+  background-color: rgba(248, 250, 252, 0.4);
+}
+
+:root.light-theme .report-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+:root.light-theme .report-item.active {
+  background: rgba(14, 165, 233, 0.08);
+  border-color: rgba(14, 165, 233, 0.2);
+}
+
+:root.light-theme .btn-secondary {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text-primary);
+}
+
+:root.light-theme .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+:root.light-theme .sidebar-search input {
+  background-color: #ffffff;
+  color: var(--text-primary);
+}
+
+:root.light-theme .search-box input {
+  background-color: #ffffff;
+  color: var(--text-primary);
+}
+
+:root.light-theme .cluster-items-list {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+:root.light-theme .source-reddit { background-color: rgba(249, 115, 22, 0.08); }
+:root.light-theme .source-hackernews { background-color: rgba(245, 158, 11, 0.08); }
+:root.light-theme .source-web { background-color: rgba(2, 132, 199, 0.08); }
+
+:root.light-theme .badge-green { background-color: rgba(16, 185, 129, 0.08); }
+:root.light-theme .badge-orange { background-color: rgba(249, 115, 22, 0.08); }
+:root.light-theme .badge-yellow { background-color: rgba(245, 158, 11, 0.08); }
+
+:root.light-theme .sidebar-menu-title {
+  color: var(--text-secondary);
+}
+
+:root.light-theme #researchConsole {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
