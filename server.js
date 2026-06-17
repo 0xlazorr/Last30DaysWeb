@@ -375,6 +375,8 @@ function findScriptPath() {
   const home = process.env.HOME || '/home/lazorr';
   
   const commonPaths = [
+    path.join(__dirname, 'last30days-skill/skills/last30days/scripts/last30days.py'),
+    path.join(__dirname, '../last30days-skill/skills/last30days/scripts/last30days.py'),
     path.join(home, '.agents/skills/last30days/scripts/last30days.py'),
     path.join(home, '.config/last30days/scripts/last30days.py'),
   ];
@@ -410,6 +412,23 @@ function findScriptPath() {
   return path.join(home, '.agents/skills/last30days/scripts/last30days.py');
 }
 
+// Helper to find virtualenv python executable for the resolved script
+function findPythonPath(scriptPath) {
+  if (scriptPath) {
+    let dir = path.dirname(scriptPath);
+    for (let i = 0; i < 4; i++) {
+      const venvPython = path.join(dir, '.venv/bin/python');
+      if (fs.existsSync(venvPython)) {
+        return venvPython;
+      }
+      const parent = path.dirname(dir);
+      if (parent === dir) break;
+      dir = parent;
+    }
+  }
+  return 'python3';
+}
+
 const activeJobs = {};
 let jobCounter = 0;
 
@@ -441,9 +460,10 @@ app.post('/api/run', (req, res) => {
     if (githubRepo && githubRepo.trim()) args.push('--github-repo', githubRepo.trim());
     if (search && search.trim()) args.push('--search', search.trim());
 
-    console.log(`[Job ${jobId}] Spawning: python3 ${scriptPath} ${args.map(a => `"${a}"`).join(' ')}`);
+    const pythonExecutable = findPythonPath(scriptPath);
+    console.log(`[Job ${jobId}] Spawning: ${pythonExecutable} ${scriptPath} ${args.map(a => `"${a}"`).join(' ')}`);
 
-    const child = spawn('python3', [scriptPath, ...args], {
+    const child = spawn(pythonExecutable, [scriptPath, ...args], {
       env: { ...process.env, PYTHONUNBUFFERED: '1' }
     });
 
