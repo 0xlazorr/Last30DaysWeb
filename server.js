@@ -296,12 +296,54 @@ app.get('/api/reports', (req, res) => {
   }
 });
 
+// Explicit Job State Machine
+const JobStatus = Object.freeze({
+  QUEUED: 'QUEUED',
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+});
+
+class JobFSM {
+  constructor(id, topic) {
+    this.id = id;
+    this.topic = topic;
+    this.status = JobStatus.QUEUED;
+    this.logs = '';
+    this.exitCode = null;
+    this.startedAt = new Date();
+    this.finishedAt = null;
+  }
+
+  transitionTo(nextStatus, reason = '') {
+    const validTransitions = {
+      [JobStatus.QUEUED]: [JobStatus.RUNNING, JobStatus.FAILED],
+      [JobStatus.RUNNING]: [JobStatus.COMPLETED, JobStatus.FAILED],
+      [JobStatus.COMPLETED]: [],
+      [JobStatus.FAILED]: [],
+    };
+    if (this.status === nextStatus) return;
+    const allowed = validTransitions[this.status] || [];
+    if (!allowed.includes(nextStatus)) {
+      console.warn(`[Job ${this.id}] Invalid transition from ${this.status} to ${nextStatus} (${reason})`);
+      return;
+    }
+    this.status = nextStatus;
+  }
+}
+
 // Endpoint to get a specific report details
 app.get('/api/reports/:id', (req, res) => {
   try {
-    const reportId = req.params.id;
-    const fileName = reportId.endsWith('.md') ? reportId : `${reportId}.md`;
-    const filePath = path.join(MEMORY_DIR, fileName);
+    const rawId = req.params.id;
+    // Prevent path traversal attacks
+    const safeId = path.basename(rawId);
+    const fileName = safeId.endsWith('.md') ? safeId : `${safeId}.md`;
+    const filePath = path.resolve(path.join(MEMORY_DIR, fileName));
+
+    if (!filePath.startsWith(path.resolve(MEMORY_DIR))) {
+      return res.status(403).json({ error: 'Access denied: Invalid file path' });
+    }
 
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({ error: 'Report not found' });
@@ -467,16 +509,8 @@ app.post('/api/run', (req, res) => {
       env: { ...process.env, PYTHONUNBUFFERED: '1' }
     });
 
-    const job = {
-      id: jobId,
-      topic: topic.trim(),
-      status: 'running',
-      logs: '',
-      exitCode: null,
-      startedAt: new Date(),
-      finishedAt: null
-    };
-
+    const job = new JobFSM(jobId, topic.trim());
+    job.transitionTo(JobStatus.RUNNING, 'Process spawned');
     activeJobs[jobId] = job;
 
     child.stdout.on('data', (data) => {
@@ -489,19 +523,20 @@ app.post('/api/run', (req, res) => {
 
     child.on('error', (err) => {
       console.error(`[Job ${jobId}] Process error:`, err);
-      job.status = 'failed';
+      job.transitionTo(JobStatus.FAILED, err.message);
       job.logs += `\n[Server Error] Failed to start process: ${err.message}\n`;
       job.finishedAt = new Date();
     });
 
     child.on('close', (code) => {
-      job.status = code === 0 ? 'completed' : 'failed';
+      const finalStatus = code === 0 ? JobStatus.COMPLETED : JobStatus.FAILED;
+      job.transitionTo(finalStatus, `Exit code ${code}`);
       job.exitCode = code;
       job.finishedAt = new Date();
       console.log(`[Job ${jobId}] Completed with exit code ${code}`);
     });
 
-    res.json({ success: true, jobId, status: 'running' });
+    res.json({ success: true, jobId, status: job.status });
   } catch (error) {
     console.error('Error starting research job:', error);
     res.status(500).json({ error: 'Failed to initiate research job' });
